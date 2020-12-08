@@ -1,0 +1,28 @@
+#!/bin/bash -l
+#
+#SBATCH -t 00:30:00
+#SBATCH -p debug
+#
+#SBATCH -N 6
+#SBATCH -S 4
+#SBATCH -C knl,quad,cache
+#
+#  specify number of ARIES electrical groups 
+#SBATCH --switches=1@96:00:00
+#
+#############################################################################
+#
+export OMP_PLACES=threads
+export OMP_PROC_BIND=spread
+export MPICH_GNI_MAX_EAGER_MSG_SIZE=16384
+#
+module unload cray-libsci
+module load craype-hugepages2M
+#
+#############################################################################
+#
+export OMP_NUM_THREADS=256
+#
+srun -n 6 -c 256 --cpu_bind=cores ./xmfdn-vnn-lobpcg-KNL
+#
+#############################################################################

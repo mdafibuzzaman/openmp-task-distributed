@@ -1,0 +1,39 @@
+&inputlist
+!
+!     sample namelist input for MFDn Version 16
+!
+!  Single-Particle basis 
+      Nshell = 13            ! integer (REQUIRED, 0 indicates read orbitals from file)
+      hbomeg = 20.0          ! real    (optional, REQUIRED for HO _vxx and TBME using hw independent Trel)
+      lamHcm = 3.0           ! real    (optional, REQUIRED for HO _vxx and TBME using hw independent Trel)
+
+!  Many-Body basis
+      Nprotons = 4
+      Nneutrons = 5
+      TwoMj = 1
+      Nmin = 0
+      Nmax = 8
+
+      neivals = 5
+      startit = 0
+
+      blksize = 4000
+
+      Trelfile = 'TBME_TrelHO'
+      Hrelfile = 'TBME_HrelHO'
+      Vnnfile = 'VNN_Daejeon16_hw20.0'
+
+!  Observables
+      numTBops = 2            ! integer	(optional, default 0)
+      obdme = .true.
+
+/
+&obslist
+!
+! up to numTBops TBME files for observables, starting with R2
+!
+! first TBME file is interpreted as R2 operator -- calculates seperate r_p and r_n
+      TBMEoperators(1) = 'TBME_R2'        ! character*128
+      TBMEoperators(2) = 'TBME_HCM'       ! character*128
+
+/
